@@ -72,22 +72,6 @@ const App = () => {
       <h1 className="text-6xl font-black mb-8 justify-center text-center animate-pulse">
         Star Wars Characters
       </h1>
-      <div className="mb-8 flex justify-center flex-wrap gap-2">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          pageNum => (
-            <button
-              key={pageNum}
-              className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
-                currentPage === pageNum ? 'opacity-50' : ''
-              }`}
-              onClick={() => changePage(pageNum)}
-              disabled={currentPage === pageNum}
-            >
-              {pageNum}
-            </button>
-          )
-        )}
-      </div>
 
       <div className="mb-4 flex justify-center flex-wrap gap-2">
         {genderFilters.map(gender => (
@@ -113,7 +97,7 @@ const App = () => {
             {paginatedCharacters.map(character => (
               <div
                 key={character.id}
-                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6"
+                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4"
               >
                 <img
                   src={`https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`}
@@ -125,6 +109,22 @@ const App = () => {
                 </h2>
               </div>
             ))}
+          </div>
+          <div className="mb-8 flex justify-center flex-wrap gap-2">
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              pageNum => (
+                <button
+                  key={pageNum}
+                  className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
+                    currentPage === pageNum ? 'opacity-50' : ''
+                  }`}
+                  onClick={() => changePage(pageNum)}
+                  disabled={currentPage === pageNum}
+                >
+                  {pageNum}
+                </button>
+              )
+            )}
           </div>
         </>
       )}

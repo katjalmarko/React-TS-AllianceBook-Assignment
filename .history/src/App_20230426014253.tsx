@@ -113,7 +113,8 @@ const App = () => {
             {paginatedCharacters.map(character => (
               <div
                 key={character.id}
-                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6"
+                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6" // Adjust the width classes
+                style={{ opacity: '0.8' }} // Add an opacity value between 0 (completely transparent) and 1 (fully opaque)
               >
                 <img
                   src={`https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`}

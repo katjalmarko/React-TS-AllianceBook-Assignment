@@ -113,12 +113,13 @@ const App = () => {
             {paginatedCharacters.map(character => (
               <div
                 key={character.id}
-                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6"
+                className="bg-gray-100 p-4 rounded-lg shadow-md pb-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4"
               >
                 <img
                   src={`https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`}
                   alt={character.name}
-                  className="w-full h-full rounded-lg"
+                  className="rounded-lg"
+                  style={{ width: '150px', height: 'auto' }} // Change '150px' to your desired width
                 />
                 <h2 className="text-lg font-semibold text-black text-center">
                   {character.name}
