@@ -20,4 +20,5 @@ export interface PersonInfo {
 export interface Character {
   id: number;
   name: string;
+  gender: string;
 }
