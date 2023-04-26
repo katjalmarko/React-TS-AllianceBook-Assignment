@@ -3,7 +3,7 @@ const Header = () => {
     <div>
       <div className="flex flex-col items-center justify-center mt-10">
         <img
-          src="../public/images/Starwars.png"
+          src="./public/images/Starwars.png"
           alt="logo"
           className="h-24 w-auto"
         />
