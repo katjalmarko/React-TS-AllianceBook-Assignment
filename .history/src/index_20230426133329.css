@@ -7,16 +7,12 @@
 }
 
 body {
-  background-image: url(/public/images/Dn2gWYj.jpg);
+  background-image: url(/public/images/iMgvmj.gif);
   background-size: cover;
   background-attachment: fixed;
 }
 
 button:focus {
-  outline: 5px solid #4a4a4a;
-}
-
-input:focus {
   outline: 5px solid #4a4a4a;
 }
 

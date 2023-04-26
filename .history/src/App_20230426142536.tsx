@@ -47,6 +47,10 @@ const App = () => {
     }
   );
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [genderFilter]);
+
   const characters = allCharacters.filter(character => {
     if (genderFilter === '' && nameFilter === '') return true;
     if (genderFilter !== '' && character.gender !== genderFilter) return false;
@@ -70,10 +74,6 @@ const App = () => {
 
   const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [genderFilter]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -100,6 +100,7 @@ const App = () => {
           pageNum => (
             <button
               key={pageNum}
+              // (if without Mouse) - Move Forward with [Tab] and Backward with [Shift+Tab]
               className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
                 currentPage === pageNum ? 'opacity-50' : ''
               }`}
@@ -116,6 +117,7 @@ const App = () => {
         {genderFilters.map(gender => (
           <button
             key={gender}
+            tabIndex={0}
             className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
               genderFilter === gender ? 'opacity-50' : ''
             }`}

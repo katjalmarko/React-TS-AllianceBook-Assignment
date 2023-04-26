@@ -47,6 +47,10 @@ const App = () => {
     }
   );
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [genderFilter]);
+
   const characters = allCharacters.filter(character => {
     if (genderFilter === '' && nameFilter === '') return true;
     if (genderFilter !== '' && character.gender !== genderFilter) return false;
@@ -70,10 +74,6 @@ const App = () => {
 
   const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [genderFilter]);
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -47,15 +47,13 @@ const App = () => {
     }
   );
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [genderFilter]);
+
   const characters = allCharacters.filter(character => {
-    if (genderFilter === '' && nameFilter === '') return true;
-    if (genderFilter !== '' && character.gender !== genderFilter) return false;
-    if (
-      nameFilter !== '' &&
-      !character.name.toLowerCase().includes(nameFilter.toLowerCase())
-    )
-      return false;
-    return true;
+    if (genderFilter === '') return true;
+    return character.gender === genderFilter;
   });
 
   const itemsPerPage = 10;
@@ -71,35 +69,19 @@ const App = () => {
   const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [genderFilter]);
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-6xl font-black mb-8 justify-center text-center animate-pulse text-white">
         Star Wars Characters
       </h1>
 
-      <div className="text-center mb-4 font-bold text-2xl text-white">
-        {characters.length} characters found
-      </div>
-
-      <div className="mb-4 flex justify-center">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={nameFilter}
-          onChange={event => setNameFilter(event.target.value)}
-          className="px-4 py-2 rounded-lg bg-gray-800 text-white border-none"
-        />
-      </div>
-
-      <div className="mb-4 flex justify-center flex-wrap gap-2">
+      <div className="mb-8 flex justify-center flex-wrap gap-2">
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(
           pageNum => (
             <button
               key={pageNum}
+              tabIndex={0}
+              // (if without Mouse) - Move Forward with [Tab] and Backward with [Shift+Tab]
               className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
                 currentPage === pageNum ? 'opacity-50' : ''
               }`}
@@ -116,6 +98,7 @@ const App = () => {
         {genderFilters.map(gender => (
           <button
             key={gender}
+            tabIndex={0}
             className={`bg-gray-800 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
               genderFilter === gender ? 'opacity-50' : ''
             }`}
@@ -131,7 +114,7 @@ const App = () => {
           <span className="loader"></span>
         </div>
       ) : isError ? (
-        <div className="flex justify-center items-center font-bold text-2xl animate-bounce text-white">
+        <div className="flex justify-center items-center font-bold text-2xl animate-bounce">
           404 Error with fetching Data!
         </div>
       ) : (

@@ -16,10 +16,6 @@ button:focus {
   outline: 5px solid #4a4a4a;
 }
 
-input:focus {
-  outline: 5px solid #4a4a4a;
-}
-
 .loader {
   box-sizing: border-box;
   position: relative;

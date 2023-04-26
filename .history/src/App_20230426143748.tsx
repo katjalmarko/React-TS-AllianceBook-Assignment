@@ -71,10 +71,6 @@ const App = () => {
   const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [genderFilter]);
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-6xl font-black mb-8 justify-center text-center animate-pulse text-white">
