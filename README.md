@@ -1,12 +1,11 @@
 
-<head>
-    <title>AllianceBook</title>
-</head>
-<body>
+
+
 <h1 align="center">AllianceBook-Assignment</h1>
 <p align="center">
-    An assignment project built with modern web technologies for a seamless user experience.
+    Welcome to the Star Wars Character Directory, a web application built in React with TypeScript that allows you to browse characters from the Star Wars universe. You     can filter the characters by gender and search for them by name..
 </p>
+
 🚀 Technologies
 
     Vite for an incredibly fast build process.
@@ -17,5 +16,3 @@
     Prettier and ESLint for code formatting and linting.
     Vercel for seamless deployment.
 
-
-</body>
