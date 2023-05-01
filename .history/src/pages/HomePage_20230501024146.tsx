@@ -108,7 +108,6 @@ const HomePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-">
-      
       {/* Search by name input and Gender filter buttons */}
       <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 mb-4 mt-4">
         <div className="flex justify-center">

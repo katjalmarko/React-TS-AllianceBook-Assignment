@@ -35,7 +35,7 @@ export const CardDetails = () => {
 
   return (
     <div className="flex items-center justify-center mt-2">
-      <div className="flex flex-col md:flex-row justify-center items-center p-8 bg-gray-800/60 border border-gray-300 rounded-lg shadow-md text-gray-200 w-11/12 xl:w-1/2">
+      <div className="flex flex-col md:flex-row justify-center items-center p-8 bg-gray-800/60 border border-gray-300 rounded-lg shadow-md text-gray-200 w-11/12 md:w-2/3 lg:w-1/2">
         <img
           src={photoUrl}
           alt={character.name}

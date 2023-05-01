@@ -1,6 +1,3 @@
-
-
-
 <h1 align="center">AllianceBook-Assignment</h1>
 <p align="center">
     Welcome to the Star Wars Character Directory, a web application built with React-TypeScript that allows you to browse characters from the Star Wars universe.
@@ -16,4 +13,3 @@
     Prettier and ESLint for code formatting and linting.
     Vercel for seamless deployment.
     Responsive for all kinds of devices.
-
