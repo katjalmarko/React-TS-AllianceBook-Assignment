@@ -9,6 +9,7 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [genderFilter, setGenderFilter] = useState<string>('');
   const [nameFilter, setNameFilter] = useState<string>('');
+  // const [allCharacters, setAllCharacters] = useState<Character[]>([]);
 
   // Define a function to fetch character data from the Star Wars API
   const fetchCharacters = async (page: number): Promise<Character[]> => {
@@ -49,7 +50,6 @@ const HomePage = () => {
         allData.push(...pageData);
       }
 
-      // Update the allCharacters state with the fetched data
       return allData;
     },
     {
@@ -82,7 +82,7 @@ const HomePage = () => {
   };
 
   // Calculate the total number of pages for pagination
-  const totalPages = Math.ceil((characters?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil(characters?.length || 0 / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
 
   // Reset the current page when the gender filter is changed
@@ -166,7 +166,7 @@ const HomePage = () => {
         <div className="text-base sm:text-lg text-white">
           Characters :{' '}
           <span className="font-crimson font-bold text-3xl animate-pulse">
-            {characters?.length}
+            {characters?.length || 0}
           </span>
         </div>
       </div>

@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { PersonInfo, Character } from '../types';
 import Card from '../components/Card';
+import CharacterContext from '../components/';
 
 const HomePage = () => {
   // Declare state variables for pagination, filters, and character data
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [genderFilter, setGenderFilter] = useState<string>('');
   const [nameFilter, setNameFilter] = useState<string>('');
+  const [allCharacters, setAllCharacters] = useState<Character[]>([]);
 
   // Define a function to fetch character data from the Star Wars API
   const fetchCharacters = async (page: number): Promise<Character[]> => {
@@ -33,11 +35,7 @@ const HomePage = () => {
   };
 
   // useQuery hook to fetch all character data and handle loading and error states
-  const {
-    data: allCharacters,
-    isLoading,
-    isError,
-  } = useQuery<Character[]>(
+  const { isLoading, isError } = useQuery<Character[]>(
     ['characters'],
     async () => {
       const totalPages = 9;
@@ -50,6 +48,7 @@ const HomePage = () => {
       }
 
       // Update the allCharacters state with the fetched data
+      setAllCharacters(allData);
       return allData;
     },
     {
@@ -58,7 +57,7 @@ const HomePage = () => {
   );
 
   // Filter characters based on the applied gender and name filters
-  const characters = allCharacters?.filter(character => {
+  const characters = allCharacters.filter(character => {
     if (genderFilter === '' && nameFilter === '') return true;
     if (genderFilter !== '' && character.gender !== genderFilter) return false;
     if (
@@ -71,7 +70,7 @@ const HomePage = () => {
 
   // Paginate filtered characters based on the current page
   const itemsPerPage = 10;
-  const paginatedCharacters = characters?.slice(
+  const paginatedCharacters = characters.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -82,7 +81,7 @@ const HomePage = () => {
   };
 
   // Calculate the total number of pages for pagination
-  const totalPages = Math.ceil((characters?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
 
   // Reset the current page when the gender filter is changed
@@ -109,75 +108,76 @@ const HomePage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-">
-      {/* Search by Name input */}
-      <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 mb-4 mt-4">
-        <div className="flex justify-center">
-          <input
-            type="text"
-            placeholder="Search by name"
-            value={nameFilter}
-            onChange={event => setNameFilter(event.target.value)}
-            className="px-4 py-2 rounded-lg bg-gray-800 text-white border-none"
-          />
+    <CharacterContext.Provider value={{ allCharacters, setAllCharacters }}>
+      <div className="container mx-auto px-4 py-">
+        {/* Search by name input and Gender filter buttons */}
+        <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 mb-4 mt-4">
+          <div className="flex justify-center">
+            <input
+              type="text"
+              placeholder="Search by name"
+              value={nameFilter}
+              onChange={event => setNameFilter(event.target.value)}
+              className="px-4 py-2 rounded-lg bg-gray-800 text-white border-none"
+            />
+          </div>
+
+          <div className="flex justify-center flex-wrap gap-2 mt-4 md:mt-0">
+            {genderFilters.map(gender => (
+              <button
+                key={gender}
+                className={`bg-gray-800 text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
+                  genderFilter === gender ? 'opacity-50' : ''
+                }`}
+                onClick={() => setGenderFilter(gender)}
+              >
+                {gender || 'All'}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Search by Gender filter buttons */}
-        <div className="flex justify-center flex-wrap gap-2 mt-4 md:mt-0">
-          {genderFilters.map(gender => (
-            <button
-              key={gender}
-              className={`bg-gray-800 text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
-                genderFilter === gender ? 'opacity-50' : ''
-              }`}
-              onClick={() => setGenderFilter(gender)}
-            >
-              {gender || 'All'}
-            </button>
+        {/* Pagination buttons */}
+        <div className="mb-8 flex justify-center flex-wrap gap-2 font-crimson">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            pageNum => (
+              <button
+                key={pageNum}
+                className={`bg-gray-800 text-white text-base sm:text-lg px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 font-extrabold ${
+                  currentPage === pageNum ? 'opacity-50' : ''
+                }`}
+                onClick={() => changePage(pageNum)}
+              >
+                {pageNum}
+              </button>
+            )
+          )}
+        </div>
+
+        {/* Display how many characters were found in the database and current page */}
+        <div className="flex flex-col sm:flex-row items-center justify-between mx-14 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+          <div className="text-base sm:text-lg text-white">
+            Current Page :{' '}
+            <span className="font-crimson font-bold text-3xl animate-pulse">
+              {currentPage}
+            </span>
+          </div>
+          <div className="text-base sm:text-lg text-white">
+            Characters :{' '}
+            <span className="font-crimson font-bold text-3xl animate-pulse">
+              {characters.length}
+            </span>
+          </div>
+        </div>
+
+        {/* Display character cards */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-8 mb-12">
+          {paginatedCharacters.map(character => (
+            <Card key={character.id} character={character} />
           ))}
         </div>
       </div>
-
-      {/* Pagination buttons */}
-      <div className="mb-8 flex justify-center flex-wrap gap-2 font-crimson">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          pageNum => (
-            <button
-              key={pageNum}
-              className={`bg-gray-800 text-white text-base sm:text-lg px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 font-extrabold ${
-                currentPage === pageNum ? 'opacity-50' : ''
-              }`}
-              onClick={() => changePage(pageNum)}
-            >
-              {pageNum}
-            </button>
-          )
-        )}
-      </div>
-
-      {/* Display how many characters were found in the database and current page */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mx-14 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
-        <div className="text-base sm:text-lg text-white">
-          Current Page :{' '}
-          <span className="font-crimson font-bold text-3xl animate-pulse">
-            {currentPage}
-          </span>
-        </div>
-        <div className="text-base sm:text-lg text-white">
-          Characters :{' '}
-          <span className="font-crimson font-bold text-3xl animate-pulse">
-            {characters?.length}
-          </span>
-        </div>
-      </div>
-
-      {/* Display character cards */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-8 mb-12">
-        {(paginatedCharacters || []).map(character => (
-          <Card key={character.id} character={character} />
-        ))}
-      </div>
-    </div>
+    </CharacterContext.Provider>
   );
 };
 

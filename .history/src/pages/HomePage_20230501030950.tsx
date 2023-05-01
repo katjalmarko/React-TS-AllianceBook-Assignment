@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { PersonInfo, Character } from '../types';
 import Card from '../components/Card';
+import CharacterContext from '../context/CharacterContext';
 
 const HomePage = () => {
   // Declare state variables for pagination, filters, and character data
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [genderFilter, setGenderFilter] = useState<string>('');
   const [nameFilter, setNameFilter] = useState<string>('');
+  const [allCharacters, setAllCharacters] = useState<Character[]>([]);
 
   // Define a function to fetch character data from the Star Wars API
   const fetchCharacters = async (page: number): Promise<Character[]> => {
@@ -33,11 +35,7 @@ const HomePage = () => {
   };
 
   // useQuery hook to fetch all character data and handle loading and error states
-  const {
-    data: allCharacters,
-    isLoading,
-    isError,
-  } = useQuery<Character[]>(
+  const { isLoading, isError } = useQuery<Character[]>(
     ['characters'],
     async () => {
       const totalPages = 9;
@@ -50,6 +48,7 @@ const HomePage = () => {
       }
 
       // Update the allCharacters state with the fetched data
+      setAllCharacters(allData);
       return allData;
     },
     {
@@ -58,7 +57,7 @@ const HomePage = () => {
   );
 
   // Filter characters based on the applied gender and name filters
-  const characters = allCharacters?.filter(character => {
+  const characters = allCharacters.filter(character => {
     if (genderFilter === '' && nameFilter === '') return true;
     if (genderFilter !== '' && character.gender !== genderFilter) return false;
     if (
@@ -71,7 +70,7 @@ const HomePage = () => {
 
   // Paginate filtered characters based on the current page
   const itemsPerPage = 10;
-  const paginatedCharacters = characters?.slice(
+  const paginatedCharacters = characters.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -82,7 +81,7 @@ const HomePage = () => {
   };
 
   // Calculate the total number of pages for pagination
-  const totalPages = Math.ceil((characters?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil(characters.length / itemsPerPage);
   const genderFilters = ['', 'male', 'female', 'n/a', 'hermaphrodite', 'none'];
 
   // Reset the current page when the gender filter is changed
@@ -110,7 +109,7 @@ const HomePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-">
-      {/* Search by Name input */}
+      {/* Search by name input and Gender filter buttons */}
       <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 mb-4 mt-4">
         <div className="flex justify-center">
           <input
@@ -122,7 +121,6 @@ const HomePage = () => {
           />
         </div>
 
-        {/* Search by Gender filter buttons */}
         <div className="flex justify-center flex-wrap gap-2 mt-4 md:mt-0">
           {genderFilters.map(gender => (
             <button
@@ -166,14 +164,14 @@ const HomePage = () => {
         <div className="text-base sm:text-lg text-white">
           Characters :{' '}
           <span className="font-crimson font-bold text-3xl animate-pulse">
-            {characters?.length}
+            {characters.length}
           </span>
         </div>
       </div>
 
       {/* Display character cards */}
       <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-8 mb-12">
-        {(paginatedCharacters || []).map(character => (
+        {paginatedCharacters.map(character => (
           <Card key={character.id} character={character} />
         ))}
       </div>
