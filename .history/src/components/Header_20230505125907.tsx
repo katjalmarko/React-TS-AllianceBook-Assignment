@@ -19,7 +19,7 @@ const Header = () => {
       <img
         src={Starwars1}
         alt="logo"
-        className="h-6 sm:h-16 md:h-16 lg:h-20 xl:h-24"
+        className="h-8 xs:h-10 sm:h-16 md:h-16 lg:h-20 xl:h-24"
       />
       <h1
         className="text-white animate-pulse text-[8px] sm:text-sm md:text-base lg:text-xl xl:text-2xl"

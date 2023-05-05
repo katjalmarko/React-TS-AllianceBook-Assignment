@@ -109,7 +109,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 justify-center">
+    <div className="container mx-auto px-4">
       {/* Search by Name input */}
       <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 mb-4 mt-4">
         <div className="flex justify-center">
@@ -118,7 +118,7 @@ const HomePage = () => {
             placeholder="Search by name"
             value={nameFilter}
             onChange={event => setNameFilter(event.target.value)}
-            className="px-4 py-2 w-40 sm:w-56 md:w-64 lg:w-72 text-[8px] sm:text-[12px] md:text-[14px] text-center rounded-lg bg-gray-800 text-white border-none"
+            className="px-4 py-2 w-66 rounded-lg bg-gray-800 text-white border-none"
           />
         </div>
 
@@ -127,7 +127,7 @@ const HomePage = () => {
           {genderFilters.map(gender => (
             <button
               key={gender}
-              className={`bg-gray-800 text-white text-xs px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
+              className={`bg-gray-800 text-white text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2 rounded mx-1 my-1 ${
                 genderFilter === gender ? 'opacity-50' : ''
               }`}
               onClick={() => setGenderFilter(gender)}
@@ -156,16 +156,16 @@ const HomePage = () => {
       </div>
 
       {/* Display how many characters were found in the database and current page */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mx-10 sm:mx-28 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
-        <div className="text-[10px] md:text-base text-white">
+      <div className="flex flex-col sm:flex-row items-center justify-between mx-14 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+        <div className="text-base sm:text-lg text-white">
           Current Page :{' '}
-          <span className="font-crimson font-bold text-2xl animate-pulse">
+          <span className="font-crimson font-bold text-3xl animate-pulse">
             {currentPage}
           </span>
         </div>
-        <div className="text-[10px] md:text-base text-white">
+        <div className="text-base sm:text-lg text-white">
           Characters :{' '}
-          <span className="font-crimson font-bold text-2xl animate-pulse">
+          <span className="font-crimson font-bold text-3xl animate-pulse">
             {characters?.length}
           </span>
         </div>

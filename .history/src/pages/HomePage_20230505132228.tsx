@@ -156,16 +156,16 @@ const HomePage = () => {
       </div>
 
       {/* Display how many characters were found in the database and current page */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mx-10 sm:mx-28 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
-        <div className="text-[10px] md:text-base text-white">
+      <div className="flex flex-col sm:flex-row items-center justify-between mx-14 text-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+        <div className="text-sm md:text-lg text-white">
           Current Page :{' '}
-          <span className="font-crimson font-bold text-2xl animate-pulse">
+          <span className="font-crimson font-bold sm:text-base md:text-3xl animate-pulse">
             {currentPage}
           </span>
         </div>
-        <div className="text-[10px] md:text-base text-white">
+        <div className="text-sm md:text-lg text-white">
           Characters :{' '}
-          <span className="font-crimson font-bold text-2xl animate-pulse">
+          <span className="font-crimson font-bold text-3xl animate-pulse">
             {characters?.length}
           </span>
         </div>
