@@ -172,7 +172,7 @@ const HomePage = () => {
       </div>
 
       {/* Display character cards */}
-      <div className="flex flex-wrap justify-center gap-10 mt-8 mb-12">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-10 mt-8 mb-12">
         {(paginatedCharacters || []).map(character => (
           <Card key={character.id} character={character} />
         ))}
