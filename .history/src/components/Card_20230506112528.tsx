@@ -15,7 +15,7 @@ const Card = ({ character }: Props) => {
           className="h-64 w-full"
         />
         <div className="flex items-center h-full">
-          <h2 className="font-semibold text-center my-auto mx-3">
+          <h2 className="font-semibold text-center my-auto mx-center">
             {character.name}
           </h2>
         </div>
